@@ -1,3 +1,2 @@
 # WT2-CCD
-it's something, it s something else,drr
-sadsad
+~ hier Beschreibung einfügen was das Projekt macht, wie es zum starten, sowie zum Bedienen ist... ~
