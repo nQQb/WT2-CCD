@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<navigation>
+    <anonym>
+        <link site="home">Home</link>
+        <link site="help">Hilfe</link>
+        <link site="imprint">Impressum</link>
+        <link site="registration">Registrierung</link>
+        <link site="login">Login</link>
+    </anonym>
+    <registered>
+        <link site="home">Home</link>
+        <link site="imagemanagement">Bildverwaltung</link>
+        <link site="help">Hilfe</link>
+        <link site="imprint">Impressum</link>
+        <link site="profilemanagement">Profilverwaltung</link>
+        <link site="logout">Logout</link>
+    </registered>
+    <admin>
+        <link site="home">Home</link>
+        <link site="help">Hilfe</link>
+        <link site="usermanagement">Userverwaltung</link>
+        <link site="logout">Logout</link>
+    </admin>
+</navigation>
