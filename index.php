@@ -15,7 +15,6 @@ and open the template in the editor.
         session_start();
 
         $users = array("user1" => "pw1", "user2" => "pw2");
-        print_r($_POST);
 
         $loggedOut = false;
 
