@@ -89,6 +89,12 @@ and open the template in the editor.
             }
             ?>
         </main>
+        <!--- UPLOAD IMAGES -->
+        <form class="" action="upload.php" method="POST" enctype = "multipart/form-data">
+          <input type="file" name="file">
+          <button type="submit" name="submit">UPLOAD</button>
+        </form>
+
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
