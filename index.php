@@ -81,7 +81,7 @@ and open the template in the editor.
                 } else if ($site == "special" && isset($_SESSION["username"])) {
                     echo "<h1>Spezial</h1>";
                 } else {
-                    include("sites/Home.php");
+                    include("sites/Home.html");
                 }
             } else {
                 echo "<h1>Home</h1>";
