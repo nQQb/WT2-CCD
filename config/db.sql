@@ -56,3 +56,14 @@ CREATE TABLE `user_image` (
   `user_id` int(11) REFERENCES `user`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE `user`;
+CREATE TABLE `user`(
+`id` int(11) PRIMARY KEY AUTO_INCREMENT,
+`username` varchar(50) UNIQUE,
+`firstname` varchar(50) NOT NULL,
+`lastname` varchar(50) NOT NULL,
+`email` varchar(50) NOT NULL,
+`pwd` varchar(100) NOT NULL,
+`isAdmin` bool DEFAULT 0,
+`isActive` bool DEFAULT 1
+);
