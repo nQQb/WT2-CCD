@@ -41,7 +41,7 @@ CREATE TABLE `image_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user`(
-`id` int(11) PRIMARY KEY,
+`id` int(11) PRIMARY KEY AUTO_INCREMENT,
 `username` varchar(50) UNIQUE,
 `firstname` varchar(50) NOT NULL,
 `lastname` varchar(50) NOT NULL,
