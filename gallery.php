@@ -27,7 +27,7 @@ if (isset($_SESSION["username"])) {
             if (!is_dir($uploadThumbnailPath.$entry)) {
               ?>
               <div>
-                <img src="http://localhost/bif_ss_19/WT2-CCD/images/thumbs/<?php echo $entry; ?>"/>
+                <img src="http://localhost/bif_SS_19/WT2-CCD/images/thumbs/<?php echo $entry; ?>"/>
                 <div>
                 <?php
                 if ($isLoggedIn) {
@@ -79,7 +79,7 @@ if (isset($_SESSION["username"])) {
     }, function (data, status) {
       let img = $(sender).parent().sibling("img")[0];
       console.log(img);
-      $(img).attr("src", "http://localhost/bif_ss_19/WT3-CCD/images/thumbs/" + imageName + "?rnd=" + Math.random());
+      $(img).attr("src", "http://localhost/bif_SS_19/WT3-CCD/images/thumbs/" + imageName + "?rnd=" + Math.random());
 
     });
   }
