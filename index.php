@@ -12,6 +12,7 @@ and open the template in the editor.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
     <link rel="stylesheet" href="croppie.css"/>
+    <link rel="stylesheet" href="res/css/style.css"/>
 
     <script>
         var baseURL = '/BIF_SS19/Abschlussprojekt/';
