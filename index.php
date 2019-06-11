@@ -91,8 +91,8 @@ and open the template in the editor.
             include("inc/usermanagement.php");
         }else if ($site == "profilemanagement") {
             include("inc/profilemanagement.php");
-        } else if ($site == "infos") {
-            echo "<h1>Infos</h1>";
+        } else if ($site == "imprint") {
+            include("inc/imprint.php");
         } else if ($site == "login") {
             include("login.php");
         } else if ($site == "userdata" && isset($_SESSION["username"])) {
