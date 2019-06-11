@@ -20,9 +20,9 @@ if (isset($_SESSION["username"])) {
   <div class="col">
     <div class="flexcontainer">
       <?php
-        $uploadPatch = "C:/xampp/htdocs/bif_ss_19/WT2-CCD/images/";
+        $uploadPath = "C:/xampp/htdocs/bif_ss_19/WT2-CCD/images/";
         $uploadThumbnailPath = $uploadPath."thumbs/";
-        if (file_exists($uploadPath) & file_exists($uploadThumbnailPath) && $handle = opendir($uploadThumbnailPath) {
+        if (file_exists($uploadPath) && file_exists($uploadThumbnailPath) && $handle = opendir($uploadThumbnailPath)) {
           while (($entry = readdir($handle)) !== false) {
             if (!is_dir($uploadThumbnailPath.$entry)) {
               ?>
@@ -39,7 +39,7 @@ if (isset($_SESSION["username"])) {
                     $result->bind_param("s", $username);
                     $result->execute();
                     $result->bind_result($isAdmin);
-                    if(result->fetch() && isAdmin) {
+                    if($result->fetch() && $isAdmin) {
                       ?>
                       <button onclick="grayImage(this, '<?php echo $entry; ?>')">Graustufe</button>
                       <button onclick="rotateImageRight (this, '<?php echo $entry; ?>')">90° rechts</button>
