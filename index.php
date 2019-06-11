@@ -8,18 +8,18 @@ and open the template in the editor.
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Gallery</title>
+    <title>Webshop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
     <link rel="stylesheet" href="croppie.css"/>
-    
+
     <script>
         var baseURL = '/BIF_SS19/Abschlussprojekt/';
     </script>
 
     <?php
-    
+
     $root = __DIR__;
     include("utility/DbManager.php");
     include("model/User.class.php");
@@ -90,11 +90,13 @@ and open the template in the editor.
             include("inc/usermanagement.php");
         }else if ($site == "profilemanagement") {
             include("inc/profilemanagement.php");
-        } else if ($site == "infos") {
+        }else if ($site == "infos") {
             echo "<h1>Infos</h1>";
         } else if ($site == "login") {
             include("login.php");
-        } else if ($site == "userdata" && isset($_SESSION["username"])) {
+        }else if ($site == "gallery") {
+          include("gallery.php");
+        }else if ($site == "userdata" && isset($_SESSION["username"])) {
             include("userdata.php");
         } else if ($site == "registration" && !isset($_SESSION["username"])) {
             ?>
