@@ -1,13 +1,11 @@
 <?php session_start();
+
 $isLoggedIn = false;
 if (isset($_SESSION["username"])) {
     $isLoggedIn = true;
 }
-// nicht vergessen zu löschen !
-$isLoggedIn = true;
-//
 if ($isLoggedIn && isset($_FILES['file'])) {
-    $uploadPath = "C:/xampp/htdocs/bif_SS_19/WT2-CCD/images/";
+    $uploadPath = "pictures/";
     $uploadThumbnailPath = $uploadPath."thumbs/";
     $success = false;
     $file = $_FILES['file'];
@@ -46,7 +44,6 @@ if ($isLoggedIn && isset($_FILES['file'])) {
 
                 imagepng($thumb, $uploadThumbnailPath . $fc . '.' . $extension);
             } else if ($file["type"] == "image/gif") {
-
                 imagegif($thumb, $uploadThumbnailPath . $fc . '.' . $extension);
             }
         } else {
@@ -54,17 +51,26 @@ if ($isLoggedIn && isset($_FILES['file'])) {
         }
         imagedestroy($im);
         imagedestroy($thumb);
+        
         include("utility/DbManager.php");
         $DbManager = new DbManager($username);
-        $db = mysql_connect("localhost", "root", "", "abschlussprojekt");
-        $sql = "INSERT INTO `image` (`name`, `ownerId`) VALUES(?,?)";
-          $entry = $this->db->prepare($sql);
-          $entry->bind_param("si", $fc . '.' . $extension, $DbManager->userId);
+        
+        $filename = ($fc . '.' . $extension);
+        $userId = $DbManager->getUserId($username);
+        $db = mysqli_connect("localhost", "root", "", "abschlussprojekt");
+        $sql = "INSERT INTO `image` (`name`, `owner_id`) VALUES(?,?)";
+          $entry = $db->prepare($sql);
+          $entry->bind_param("si", $filename, $userId);
           $entry->execute();
           $entry->close();
-      }
+          
+          $imageId = $DbManager->getImageId($filename);
+          $sql = "INSERT INTO `user_image` (`user_id`, `image_id`) VALUES(?,?)";
+          $entry = $db->prepare($sql);
+          $entry->bind_param("ii", $userId, $imageId);
+          $entry->execute();
+          $entry->close();
     }
-
 
     if (!$success) {
         echo "<script>alert('Fehler beim Upload!')";
