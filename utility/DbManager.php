@@ -324,12 +324,12 @@ class DbManager{
     public function checkPwd($pwd){
         if($this->isConnected){ 
             $check = false;
-            $sql = "SELECT COUNT(*) FROM `user` WHERE `id` = ? AND `pwd` = ?";
+            $sql = "SELECT `pwd` FROM `user` WHERE `id` = ?";
             $result = $this->db->prepare($sql);
             $result->bind_param("is", $this->userId, $pwd);
             $result->execute();
-            $result->bind_result($count);
-            if($result->fetch() && $count == 1){
+            $result->bind_result($hash);
+            if($result->fetch() && password_verify($pwd, $hash)){
                 $check = true;
             }
             
