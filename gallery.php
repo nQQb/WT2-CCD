@@ -4,6 +4,9 @@ if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
 }
+// nicht vergessen zu löschen
+$isLoggedIn = true;
+//
 ?>
 <h1>Galerie</h1>
 <link rel = "stylesheet" type="text/css" href="basic.min.css" />
@@ -20,7 +23,7 @@ if (isset($_SESSION["username"])) {
   <div class="col">
     <div class="flexcontainer">
       <?php
-        $uploadPath = "C:/xampp/htdocs/bif_ss_19/WT2-CCD/images/";
+        $uploadPath = "C:/xampp/htdocs/bif_SS_19/WT2-CCD/images/";
         $uploadThumbnailPath = $uploadPath."thumbs/";
         if (file_exists($uploadPath) && file_exists($uploadThumbnailPath) && $handle = opendir($uploadThumbnailPath)) {
           while (($entry = readdir($handle)) !== false) {
@@ -34,7 +37,7 @@ if (isset($_SESSION["username"])) {
                   $isAdmin = false;
                   $db = @new mysqli ("localhost", "root", "", "abschlussprojekt");
                   if(mysqli_connect_errno() == 0){
-                    $sql = "SELECT 'is_admin' as isAdmin FROM 'user' WHERE 'username' = ?";
+                    $sql = "SELECT `isAdmin` FROM `user` WHERE `username` = ?";
                     $result = $db->prepare($sql);
                     $result->bind_param("s", $username);
                     $result->execute();
@@ -61,7 +64,6 @@ if (isset($_SESSION["username"])) {
      </div>
    </div>
  </div>
-</div>
 <script>
   function grayImage(sender, imageName) {
     sendImageIoeration(sender, imageName, "gray");
@@ -79,7 +81,7 @@ if (isset($_SESSION["username"])) {
     }, function (data, status) {
       let img = $(sender).parent().sibling("img")[0];
       console.log(img);
-      $(img).attr("src", "http://localhost/bif_SS_19/WT3-CCD/images/thumbs/" + imageName + "?rnd=" + Math.random());
+      $(img).attr("src", "http://localhost/bif_SS_19/WT2-CCD/images/thumbs/" + imageName + "?rnd=" + Math.random());
 
     });
   }
