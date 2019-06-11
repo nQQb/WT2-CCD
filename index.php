@@ -13,6 +13,10 @@ and open the template in the editor.
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
     <link rel="stylesheet" href="croppie.css"/>
+    
+    <script>
+        var baseURL = '/BIF_SS19/Abschlussprojekt/';
+    </script>
 
     <?php
 
@@ -78,8 +82,8 @@ and open the template in the editor.
     <?php
     if (isset($_GET["site"])) {
         $site = $_GET["site"];
-        if ($site == "gallery") {
-            include("gallery.php");
+        if ($site == "usermanagement") {
+            include("inc/usermanagement.php");
         } else if ($site == "infos") {
             echo "<h1>Infos</h1>";
         } else if ($site == "special" && isset($_SESSION["username"])) {
