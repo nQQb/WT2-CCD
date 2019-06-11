@@ -93,6 +93,8 @@ and open the template in the editor.
             include("inc/profilemanagement.php");
         } else if ($site == "imprint") {
             include("inc/imprint.php");
+        } else if ($site == "help") {
+            include("inc/help.php");
         } else if ($site == "login") {
             include("login.php");
         } else if ($site == "userdata" && isset($_SESSION["username"])) {
