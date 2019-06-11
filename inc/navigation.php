@@ -1,6 +1,6 @@
 <?php
-$root = $_SERVER['DOCUMENT_ROOT'] . "/BIF_SS19/Abschlussprojekt/";
-$xml = simplexml_load_file($root . "config/navigation.xml") or die("Error: Cannot create object");
+$root = dirname(__DIR__);
+$xml = simplexml_load_file($root . "/config/navigation.xml") or die("Error: Cannot create object");
 
 $isLoggedIn = false;
 $isAdmin = false;
@@ -9,7 +9,7 @@ if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
 
-    include($root."utility/DbManager.php");
+    include($root."/utility/DbManager.php");
     $dbManager = new DbManager($username);
     $isAdmin = $dbManager->isAdmin;
 }
@@ -32,7 +32,7 @@ if (isset($_SESSION["username"])) {
                 $links = $xml->anonym->link;
             }
 
-        foreach ($xml->anonym->link as $link) { ?>
+        foreach ($links as $link) { ?>
             <li class="nav-item">
                 <a class="nav-link" href="index.php?site=<?php echo $link['site'];?>"><?php echo $link; ?></a>
             </li>
