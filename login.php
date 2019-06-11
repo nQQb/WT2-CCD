@@ -13,7 +13,7 @@
   <body>
       <div class="container">
                 <h1>Login</h1>
-                <form method="post" action="register.php">
+                <form method="post" action="process.php">
                     <div class="form-group row">
                         <label for="username" class="col-sm-2 col-form-label">Benutzername:</label>
                         <div class="col-sm-4">
