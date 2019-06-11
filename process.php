@@ -1,7 +1,9 @@
 <?php
+	session_start();
 	//Get values passed from form in login.php file
 	$username = $_POST["username"];
-    $hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+	$password = $_POST["password"];
+    //$hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
     //to prevent mysql injection
     //$username = stripcslashes($username);
@@ -15,14 +17,26 @@
     if(mysqli_connect_errno() == 0)
     {
        	//query the database for user
-        $result = mysqli_query($db,"select * from user where username = '$username' and pwd = '$hash'")
-        or die("Failed to query database".mysqli_error($db));
-    }
-    if($row['username'] == $username && $row['pwd'] == $hash)
-    {
-    	echo "Login success! Welcome ".$row['username'];
-    }else{
-    	echo "Failed to login!";
+        $db = mysqli_connect("localhost", "root", "", "abschlussprojekt");
+        $sql = "select pwd from user where username = ?";
+          $entry = $db->prepare($sql);
+          $entry->bind_param("s",$username);
+          $entry->execute();
+          $entry->bind_result($pwd);
+          if($entry->fetch())
+          {
+          	if(password_verify($password,$pwd))
+          	{
+          		$_SESSION["username"] = $username;
+          		header("Location: index.php");
+          		echo"Login success!";
+
+          	}else
+          	{
+          		echo"Failed to login!";
+          	}
+          }
+          $entry->close();
     }
 
 ?>
