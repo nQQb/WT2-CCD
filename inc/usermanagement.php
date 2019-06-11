@@ -7,7 +7,6 @@ if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
 
-    include($root."/utility/DbManager.php");
     $dbManager = new DbManager($username);
     $isAdmin = $dbManager->isAdmin;
 }

@@ -19,6 +19,10 @@ and open the template in the editor.
     </script>
 
     <?php
+    
+    $root = __DIR__;
+    include("utility/DbManager.php");
+    include("model/User.class.php");
 
     /*$users = array(
         "user1" => array("password" => "pw1", "mail" => "oliver@dumhart.net", "role" => "admin"),

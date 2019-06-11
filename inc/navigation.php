@@ -1,5 +1,4 @@
 <?php
-$root = dirname(__DIR__);
 $xml = simplexml_load_file($root . "/config/navigation.xml") or die("Error: Cannot create object");
 
 $isLoggedIn = false;
@@ -9,11 +8,12 @@ if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
 
-    include($root."/utility/DbManager.php");
     $dbManager = new DbManager($username);
     $isAdmin = $dbManager->isAdmin;
 }
+
 ?>
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">

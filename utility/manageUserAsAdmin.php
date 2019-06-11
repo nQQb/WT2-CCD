@@ -10,7 +10,6 @@ $root = dirname(__DIR__);
         $username = $_SESSION["username"];
         $isLoggedIn = true;
 
-        include("DbManager.php");
         $dbManager = new DbManager($username);
         $isAdmin = $dbManager->isAdmin;
     }
