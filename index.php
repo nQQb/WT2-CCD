@@ -86,8 +86,8 @@ and open the template in the editor.
             include("inc/usermanagement.php");
         } else if ($site == "infos") {
             echo "<h1>Infos</h1>";
-        } else if ($site == "special" && isset($_SESSION["username"])) {
-            echo "<h1>Spezial</h1>";
+        } else if ($site == "login") {
+            include("login.php");
         } else if ($site == "userdata" && isset($_SESSION["username"])) {
             include("userdata.php");
         } else if ($site == "registration" && !isset($_SESSION["username"])) {
