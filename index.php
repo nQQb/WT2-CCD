@@ -8,19 +8,20 @@ and open the template in the editor.
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Gallery</title>
+    <title>Webshop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
     <link rel="stylesheet" href="croppie.css"/>
-    
+    <link rel="stylesheet" href="res/css/style.css"/>
+
     <script>
         var baseURL = '/BIF_SS19/Abschlussprojekt/';
     </script>
 
     <?php
-    
+
     $root = __DIR__;
+    $localhostRoot = "http://localhost/BIF_SS19/Abschlussprojekt";
     include("utility/DbManager.php");
     include("model/User.class.php");
 
@@ -90,11 +91,15 @@ and open the template in the editor.
             include("inc/usermanagement.php");
         }else if ($site == "profilemanagement") {
             include("inc/profilemanagement.php");
-        } else if ($site == "infos") {
-            echo "<h1>Infos</h1>";
+        } else if ($site == "imprint") {
+            include("inc/imprint.php");
+        } else if ($site == "help") {
+            include("inc/help.php");
         } else if ($site == "login") {
             include("login.php");
-        } else if ($site == "userdata" && isset($_SESSION["username"])) {
+        }else if ($site == "gallery") {
+          include("gallery.php");
+        }else if ($site == "userdata" && isset($_SESSION["username"])) {
             include("userdata.php");
         } else if ($site == "registration" && !isset($_SESSION["username"])) {
             ?>
@@ -142,13 +147,17 @@ and open the template in the editor.
                 </form>
             </div>
             <?php
-        }
+        }else {
+        include("inc/home.php");
+    }
     } else {
-        echo "<h1>Home</h1>";
-
+        include("inc/home.php");
     }
     ?>
 </main>
+<footer class="text-center">
+    <a href="index.php?site=imprint">Impressum</a>
+</footer>
 </body>
 <script src="croppie.js"></script>
 <script src="jquery-3.4.1.min.js"></script>
