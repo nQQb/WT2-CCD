@@ -11,6 +11,7 @@ if (isset($_SESSION["username"])) {
 }
 if($isLoggedIn){
     if (isset($_POST["pwd"])
+            && isset($_POST["oldPwd"])
             && isset($_POST["firstname"])
             && isset($_POST["lastname"])
             && isset($_POST["email"])) {
@@ -18,6 +19,7 @@ if($isLoggedIn){
         $user = new User();
         if($_POST["pwd"] != ""){
             $user->pwd = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
+            $oldPwd = password_hash($_POST["oldPwd"], PASSWORD_DEFAULT);
         }
         else{
             $user->pwd = "";
@@ -27,7 +29,7 @@ if($isLoggedIn){
         $user->email = $_POST["email"];
         
        
-        echo $dbManager->updateUserProfile($user);
+        echo $dbManager->updateUserProfile($user, $oldPwd);
     }
     else{
         echo "Es gab ein Problem!";
