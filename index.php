@@ -84,6 +84,8 @@ and open the template in the editor.
         $site = $_GET["site"];
         if ($site == "usermanagement") {
             include("inc/usermanagement.php");
+        }else if ($site == "profilemanagement") {
+            include("inc/profilemanagement.php");
         } else if ($site == "infos") {
             echo "<h1>Infos</h1>";
         } else if ($site == "login") {

@@ -262,5 +262,58 @@ class DbManager{
             echo json_encode($users);
         }
     }
+    
+    public function getUser($username){
+        $user = NULL;
+        if($this->isConnected){ 
+               
+            $sql = "SELECT `firstname`, `lastname`, `email` FROM `user` WHERE `username` = ?";
+            $result = $this->db->prepare($sql);
+            $result->bind_param("s", $username);
+            $result->execute();
+            $result->bind_result($firstname, $lastname, $email);
+            if($result->fetch()){
+                $user = new User();
+                $user->username = $username;
+                $user->firstname = $firstname;
+                $user->lastname = $lastname;
+                $user->email = $email;
+            }
+            
+            $result->close();
+        
+        }
+        return $user;
+    }
+    
+    public function updateUserProfile($user){
+        if($user != NULL && $this->isConnected){
+            if($user->pwd != ""){
+                $sql = "UPDATE `user` SET `firstname` = ?, `lastname` = ?, `email` = ?, `pwd` = ? WHERE `id` = ?";
+                $entry = $this->db->prepare($sql);
+                $entry->bind_param("ssssi", $user->firstname, $user->lastname, $user->email, $user->pwd, $this->userId);
+                $rc = $entry->execute();
+                if($rc){
+                    return "Erfolgreich geupdated!";
+                }
+                else{
+                    return "Es gab ein Problem beim updaten!";
+                }
+            }
+            else{
+                $sql = "UPDATE `user` SET `firstname` = ?, `lastname` = ?, `email` = ? WHERE `id` = ?";
+                $entry = $this->db->prepare($sql);
+                $entry->bind_param("sssi", $user->firstname, $user->lastname, $user->email, $this->userId);
+                $rc = $entry->execute();
+                if($rc){
+                    return "Erfolgreich geupdated!";
+                }
+                else{
+                    return "Es gab ein Problem beim updaten!";
+                }
+            }
+            
+        }
+    }
 }
 
