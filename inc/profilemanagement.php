@@ -39,6 +39,13 @@ if($isLoggedIn){
             </div>
           </div>
         <div class="form-group row">
+            <label for="password" class="col-sm-2 col-form-label">Altes Passwort:</label>
+            <div class="col-sm-4">
+              <input type="password" id="profileOldPwd" class="form-control" name="password"/>
+              <span>Um das Passwort zu ändern muss das alte Passwort eingegeben werden.</span>
+            </div>
+          </div>
+        <div class="form-group row">
             <label for="firstname" class="col-sm-2 col-form-label">Vorname:</label>
             <div class="col-sm-4">
               <input type="text" id="profileFirstname" class="form-control" value="<?php echo $user->firstname;?>" name="firstname" required/>

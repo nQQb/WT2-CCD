@@ -286,18 +286,23 @@ class DbManager{
         return $user;
     }
     
-    public function updateUserProfile($user){
+    public function updateUserProfile($user, $oldPwd){
         if($user != NULL && $this->isConnected){
             if($user->pwd != ""){
-                $sql = "UPDATE `user` SET `firstname` = ?, `lastname` = ?, `email` = ?, `pwd` = ? WHERE `id` = ?";
-                $entry = $this->db->prepare($sql);
-                $entry->bind_param("ssssi", $user->firstname, $user->lastname, $user->email, $user->pwd, $this->userId);
-                $rc = $entry->execute();
-                if($rc){
-                    return "Erfolgreich geupdated!";
+                if($this->checkPwd($oldPwd)){
+                    $sql = "UPDATE `user` SET `firstname` = ?, `lastname` = ?, `email` = ?, `pwd` = ? WHERE `id` = ?";
+                    $entry = $this->db->prepare($sql);
+                    $entry->bind_param("ssssi", $user->firstname, $user->lastname, $user->email, $user->pwd, $this->userId);
+                    $rc = $entry->execute();
+                    if($rc){
+                        return "Erfolgreich geupdated!";
+                    }
+                    else{
+                        return "Es gab ein Problem beim updaten!";
+                    }
                 }
                 else{
-                    return "Es gab ein Problem beim updaten!";
+                    return "Falsches Passwort!";
                 }
             }
             else{
@@ -313,6 +318,27 @@ class DbManager{
                 }
             }
             
+        }
+    }
+    
+    public function checkPwd($pwd){
+        if($this->isConnected){ 
+            $check = false;
+            $sql = "SELECT `pwd` FROM `user` WHERE `id` = ?";
+            $result = $this->db->prepare($sql);
+            $result->bind_param("is", $this->userId, $pwd);
+            $result->execute();
+            $result->bind_result($hash);
+            if($result->fetch() && password_verify($pwd, $hash)){
+                $check = true;
+            }
+            
+            $result->close();
+            return $check;
+        
+        }
+        else{
+            return false;
         }
     }
 }
