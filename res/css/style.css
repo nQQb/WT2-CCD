@@ -1,0 +1,7 @@
+#homepage{
+    margin: 10px;
+}
+#homepage img{
+    max-height: 200px;
+    max-width: 200px;
+}

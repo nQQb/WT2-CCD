@@ -10,9 +10,9 @@ and open the template in the editor.
     <meta charset="UTF-8">
     <title>Gallery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
     <link rel="stylesheet" href="croppie.css"/>
+    <link rel="stylesheet" href="res/css/style.css"/>
     
     <script>
         var baseURL = '/BIF_SS19/Abschlussprojekt/';
@@ -21,6 +21,7 @@ and open the template in the editor.
     <?php
     
     $root = __DIR__;
+    $localhostRoot = "http://localhost/BIF_SS19/Abschlussprojekt";
     include("utility/DbManager.php");
     include("model/User.class.php");
 
@@ -142,13 +143,17 @@ and open the template in the editor.
                 </form>
             </div>
             <?php
-        }
+        }else {
+        include("inc/home.php");
+    }
     } else {
-        echo "<h1>Home</h1>";
-
+        include("inc/home.php");
     }
     ?>
 </main>
+<footer class="text-center">
+    <a href="index.php?site=imprint">Impressum</a>
+</footer>
 </body>
 <script src="croppie.js"></script>
 <script src="jquery-3.4.1.min.js"></script>
