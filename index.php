@@ -15,6 +15,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="res/css/style.css"/>
         <script src="res/js/jquery-3.4.1.min.js"></script>
         <script src="res/js/croppie.js"></script>
+        <script src="res/js/bootstrap.min.js"></script>
 
         <script>
             var baseURL = '/BIF_SS19/Abschlussprojekt/';
