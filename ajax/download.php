@@ -5,7 +5,7 @@ if (isset($_SESSION["username"])) {
     $isLoggedIn = true;
 }
 if($isLoggedIn && isset($_POST["imgnames"])){
-    $root = __DIR__;
+    $root = dirname(__DIR__);
     $names = $_POST["imgnames"];
     $filename="images.zip";
     $uploadPath = $root."/pictures/";

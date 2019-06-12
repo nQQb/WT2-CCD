@@ -5,8 +5,9 @@ if (isset($_SESSION["username"])) {
     $isLoggedIn = true;
     $username = $_SESSION["username"];
 }
+$root = dirname(__DIR__);
 if ($isLoggedIn && isset($_FILES['file'])) {
-    $uploadPath = "pictures/";
+    $uploadPath = $root."/pictures/";
     $uploadThumbnailPath = $uploadPath."thumbs/";
     $success = false;
     $file = $_FILES['file'];
@@ -53,7 +54,7 @@ if ($isLoggedIn && isset($_FILES['file'])) {
         imagedestroy($im);
         imagedestroy($thumb);
         
-        include("utility/DbManager.php");
+        include($root."/utility/DbManager.php");
         $dbManager = new DbManager($username);
         $filename = ($fc . '.' . $extension);
         $dbManager->insertImage($filename);
@@ -62,10 +63,10 @@ if ($isLoggedIn && isset($_FILES['file'])) {
     if (!$success) {
         echo "<script>alert('Fehler beim Upload!')";
     } else {
-        header("Location: index.php?site=gallery");
+        header("Location: ../index.php?site=gallery");
     }
 } else {
-    header("Location: index.php?site=gallery");
+    header("Location: ../index.php?site=gallery");
 }
 
 function getFileNumber($path, $ext){

@@ -246,9 +246,9 @@ class DbManager{
             $sql = "SELECT `user`.`username` FROM `user`
                     JOIN `user_image` ON `user`.`id` = `user_image`.`user_id`
                     JOIN `image` ON `image`.`id` = `user_image`.`image_id`
-                    WHERE `image`.`name` = ?";
+                    WHERE `image`.`name` = ? AND `user`.`id` != ?";
             $entry = $this->db->prepare($sql);
-            $entry->bind_param("s", $image);
+            $entry->bind_param("s", $image, $this->userId);
             $entry->execute();
             $entry->bind_result($name);
 
@@ -389,6 +389,32 @@ class DbManager{
             $entry->bind_param("sss", $lat, $long, $image);
             $success = $entry->execute();
             $entry->close();
+            return $success;
+        }
+    }
+    
+    public function deleteImage($image){
+        if($this->isConnected){      
+            $imageId = $this->getImageId($image);
+            $sql = "DELETE FROM `image` WHERE `id` = ?";
+            $entry = $this->db->prepare($sql);
+            $entry->bind_param("i", $imageId);
+            $success = $entry->execute();
+            $entry->close();
+            if($success){
+                $sql = "DELETE FROM `user_image` WHERE `image_id` = ?";
+                $entry = $this->db->prepare($sql);
+                $entry->bind_param("i", $imageId);
+                $success = $entry->execute();
+                $entry->close();
+                if($success){
+                    $sql = "DELETE FROM `image_tag` WHERE `image_id` = ?";
+                    $entry = $this->db->prepare($sql);
+                    $entry->bind_param("i", $imageId);
+                    $success = $entry->execute();
+                    $entry->close();
+                }
+            }
             return $success;
         }
     }

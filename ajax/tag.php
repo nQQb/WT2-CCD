@@ -1,6 +1,6 @@
 <?php session_start();
 
-    include("utility/DbManager.php");
+    include(dirname(__DIR__)."/utility/DbManager.php");
 
 if(isset($_POST["tag"]) && isset($_POST["image"]) && isset($_POST["operation"])){
     

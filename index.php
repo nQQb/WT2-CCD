@@ -13,8 +13,12 @@ and open the template in the editor.
         <link rel="stylesheet" href="res/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/croppie.css"/>
         <link rel="stylesheet" href="res/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="res/css/basic.min.css"/>
+        <link rel="stylesheet" type="text/css" href="res/css/dropzone.min.css"/>
+        <link rel="stylesheet" type="text/css" href="res/css/leaflet.css"/>
         <script src="res/js/jquery-3.4.1.min.js"></script>
         <script src="res/js/croppie.js"></script>
+        <script src="res/js/leaflet.js"></script>
 
         <script>
             var baseURL = '/BIF_SS19/Abschlussprojekt/';

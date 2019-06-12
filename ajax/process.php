@@ -29,9 +29,8 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
                     setcookie("username", $username, time() + (60 * 60 * 24), "/");
                 }
                 header("Location: ../index.php");
-                echo"Login success!";
             } else {
-                echo"Failed to login!";
+                header("Location: ../index.php?site=login&msg=". urlencode("Ungültiger Login!"));
             }
         }
         $entry->close();
