@@ -11,7 +11,6 @@ if (isset($_SESSION["username"])) {
     $dbManager = new DbManager($username);
     $isAdmin = $dbManager->isAdmin;
 }
-
 ?>
 
 
@@ -21,21 +20,28 @@ if (isset($_SESSION["username"])) {
     </a>
     <ul class="navbar-nav">
         <?php
-
-        if($isLoggedIn && $isAdmin) {
+        if ($isLoggedIn && $isAdmin) {
             $links = $xml->admin->link;
-            }
-            else if($isLoggedIn){
+        } else if ($isLoggedIn) {
             $links = $xml->registered->link;
-            }
-            else{
-                $links = $xml->anonym->link;
-            }
+        } else {
+            $links = $xml->anonym->link;
+        }
 
-        foreach ($links as $link) { ?>
+        foreach ($links as $link) {
+            ?>
             <li class="nav-item">
-                <a class="nav-link" href="index.php?site=<?php echo $link['site'];?>"><?php echo $link; ?></a>
+                <a class="nav-link" href="index.php?site=<?php echo $link['site']; ?>"><?php echo $link; ?></a>
             </li>
-        <?php } ?>
+<?php
+}
+if ($isLoggedIn) {
+    ?>
+            <li class="nav-item">
+                <span class="nav-link">eingeloggt als: <?php echo $username; ?></span>
+            </li>
+    <?php
+}
+?>
     </ul>
 </nav>
