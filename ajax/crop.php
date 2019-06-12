@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST["image"]) && isset($_POST["imagename"])){
-    $root = __DIR__;
+    $root = dirname(__DIR__);
     $uploadPath = $root."/pictures/";
     $uploadThumbnailPath = $uploadPath."thumbs/";
     $image = $_POST["image"];

@@ -1,3 +1,4 @@
+<!-- Hier wird kurz beschrieben wie die Website Funktioniert und was sie macht. -->
 <div id="helppage">
     <h3>Kurze Beschreibung zu unsere Website</h3>
     <p>

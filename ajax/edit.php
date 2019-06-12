@@ -1,7 +1,7 @@
 <?php session_start();
 $isLoggedIn = false;
 $isAdmin = false;
-$root = __DIR__;
+$root = dirname(__DIR__);
 if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
@@ -67,7 +67,7 @@ function editImage($operation, $path, $imageName, $newImageName){
             $fn = $newImageName.$ending;
             if(copy($path.$imageName, $path.$fn) == 1){
                 
-                include("utility/DbManager.php");
+                include(dirname(__DIR__)."/utility/DbManager.php");
                 $dbManager = new DbManager($_SESSION["username"]);
                 $dbManager->insertImage($fn);
                 echo $path.$fn;
