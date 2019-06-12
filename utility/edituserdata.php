@@ -1,4 +1,7 @@
-<?php session_start();$root = dirname(__DIR__);
+<?php
+
+session_start();
+$root = dirname(__DIR__);
 $localhostRoot = "http://localhost/BIF_SS19/Abschlussprojekt";
 $isLoggedIn = false;
 $isAdmin = false;
@@ -6,35 +9,29 @@ if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
 
-    include($root."/utility/DbManager.php");
+    include($root . "/utility/DbManager.php");
     $dbManager = new DbManager($username);
 }
-if($isLoggedIn){
-    if (isset($_POST["pwd"])
-            && isset($_POST["oldPwd"])
-            && isset($_POST["firstname"])
-            && isset($_POST["lastname"])
-            && isset($_POST["email"])) {
-        include($root."/model/User.class.php");
+if ($isLoggedIn) {
+    if (isset($_POST["pwd"]) && isset($_POST["oldPwd"]) && isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["email"])) {
+        include($root . "/model/User.class.php");
         $user = new User();
-        if($_POST["pwd"] != ""){
+        if ($_POST["pwd"] != "") {
             $user->pwd = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-            $oldPwd = password_hash($_POST["oldPwd"], PASSWORD_DEFAULT);
-        }
-        else{
+            $oldPwd = $_POST["oldPwd"];
+        } else {
             $user->pwd = "";
+            $oldPwd = "";
         }
         $user->firstname = $_POST["firstname"];
         $user->lastname = $_POST["lastname"];
         $user->email = $_POST["email"];
-        
-       
+
+
         echo $dbManager->updateUserProfile($user, $oldPwd);
-    }
-    else{
+    } else {
         echo "Es gab ein Problem!";
     }
+} else {
+    echo "Sie sind nicht authorisiert für diese Operation!";
 }
-else{
-        echo "Sie sind nicht authorisiert für diese Operation!";
-    }

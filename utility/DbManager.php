@@ -326,7 +326,7 @@ class DbManager{
             $check = false;
             $sql = "SELECT `pwd` FROM `user` WHERE `id` = ?";
             $result = $this->db->prepare($sql);
-            $result->bind_param("is", $this->userId, $pwd);
+            $result->bind_param("i", $this->userId);
             $result->execute();
             $result->bind_result($hash);
             if($result->fetch() && password_verify($pwd, $hash)){

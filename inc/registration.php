@@ -14,6 +14,12 @@
             </div>
         </div>
         <div class="form-group row">
+            <label for="password2" class="col-sm-2 col-form-label">Passwort:</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" name="password2"/>
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="firstname" class="col-sm-2 col-form-label">Vorname:</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" name="firstname"/>
