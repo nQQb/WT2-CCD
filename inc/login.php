@@ -19,4 +19,9 @@
         </div>
         <input type="submit" class="btn btn-primary" value="Log in"/>
     </form>
+    <?php if (isset($_GET["msg"])) { ?>
+            <div class="alert alert-warning" role="alert">
+                <?php echo urldecode($_GET["msg"]); ?>
+            </div>
+        <?php } ?>
 </div>
