@@ -42,23 +42,11 @@ if (isset($_SESSION["username"])) {
             <?php } ?>
         </ul>
     </div>
-    <ul class="navbar-nav">
-        <?php
-        if ($isLoggedIn && $isAdmin) {
-            $links = $xml->admin->link;
-        } else if ($isLoggedIn) {
-            $links = $xml->registered->link;
-        } else {
-            $links = $xml->anonym->link;
-        }
 
-        foreach ($links as $link) {
-            ?>
-            <li class="nav-item">
-                <a class="nav-link" href="index.php?site=<?php echo $link['site']; ?>"><?php echo $link; ?></a>
-            </li>
+
+
 <?php
-}
+
 if ($isLoggedIn) {
     ?>
             <li class="nav-item">
