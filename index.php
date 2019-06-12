@@ -17,6 +17,7 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="res/css/dropzone.min.css"/>
         <link rel="stylesheet" type="text/css" href="res/css/leaflet.css"/>
         <script src="res/js/jquery-3.4.1.min.js"></script>
+        <script src="res/js/bootstrap.min.js"></script>
         <script src="res/js/croppie.js"></script>
         <script src="res/js/leaflet.js"></script>
 
