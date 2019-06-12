@@ -185,9 +185,9 @@ class DbManager{
     
     public function setPassword($pwdhash, $userId){
         if($this->isConnected){
-            $sql = "UPDATE `user` SET `pwd` WHERE `user`.`id` = ?";
+            $sql = "UPDATE `user` SET `pwd` = ? WHERE `user`.`id` = ?";
             $entry = $this->db->prepare($sql);
-            $entry->bind_param("i", $userId);
+            $entry->bind_param("si", $pwdhash, $userId);
             $success = $entry->execute();
             $entry->close();
         }

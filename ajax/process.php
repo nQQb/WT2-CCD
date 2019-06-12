@@ -1,4 +1,6 @@
-<?php session_start();
+<?php
+
+session_start();
 
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     //Get values passed from form in login.php file
@@ -16,22 +18,28 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     if (mysqli_connect_errno() == 0) {
         //query the database for user
         $db = mysqli_connect("localhost", "root", "", "abschlussprojekt");
-        $sql = "select pwd from user where username = ?";
+        $sql = "select pwd, isActive from user where username = ?";
         $entry = $db->prepare($sql);
         $entry->bind_param("s", $username);
         $entry->execute();
-        $entry->bind_result($pwd);
+        $entry->bind_result($pwd, $isActive);
         if ($entry->fetch()) {
-            if (password_verify($password, $pwd)) {
-                $_SESSION["username"] = $username;
-
-                if (isset($_POST["remember"]) && $_POST["remember"] == "on") {
-                    setcookie("username", $username, time() + (60 * 60 * 24), "/");
-                }
-                header("Location: ../index.php");
+            if ($isActive == 0) {
+                header("Location: ../index.php?site=login&msg=" . urlencode("Benutzer inaktiv"));
             } else {
-                header("Location: ../index.php?site=login&msg=". urlencode("Ungültiger Login!"));
+                if (password_verify($password, $pwd)) {
+                    $_SESSION["username"] = $username;
+
+                    if (isset($_POST["remember"]) && $_POST["remember"] == "on") {
+                        setcookie("username", $username, time() + (60 * 60 * 24), "/");
+                    }
+                    header("Location: ../index.php");
+                } else {
+                    header("Location: ../index.php?site=login&msg=" . urlencode("Ungültiger Login!"));
+                }
             }
+        } else {
+            header("Location: ../index.php?site=login&msg=" . urlencode("Ungültiger Login!"));
         }
         $entry->close();
     }

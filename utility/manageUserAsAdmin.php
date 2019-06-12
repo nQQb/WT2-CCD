@@ -1,5 +1,7 @@
 <?php session_start();
 
+require '../PHPMailer-master/PHPMailerAutoload.php';
+
 if(isset($_POST["userId"]) && isset($_POST["operation"])){
 $root = dirname(__DIR__);
     $userId = $_POST["userId"];
@@ -10,6 +12,7 @@ $root = dirname(__DIR__);
         $username = $_SESSION["username"];
         $isLoggedIn = true;
 
+        include($root."/utility/DbManager.php");
         $dbManager = new DbManager($username);
         $isAdmin = $dbManager->isAdmin;
     }
@@ -23,7 +26,7 @@ $root = dirname(__DIR__);
             if($email != ""){
                 $pwd = substr(md5(microtime()),rand(0,26),5);
                 $pwdhash = password_hash($pwd, PASSWORD_DEFAULT);
-                if($dbManager->setPassword($pwdhash)){
+                if($dbManager->setPassword($pwdhash, $userId)){
                     $success = sendMail($email, $pwd);
                 }
             }
@@ -42,8 +45,8 @@ function sendMail($address, $pwd){
     $email->Host = "smtp.technikum-wien.at";
     $email->Port = 587;
     $email->SMTPAuth = true;
-    $email->Username = "if18b074";
-    $email->Password = "123";
+    $email->Username = "xxxxx";
+    $email->Password = "xxxxxx";
     $email->SMTPSecure = "tls";
 
     $email->setFrom("if18b074@technikum-wien.at", "Ue3");
