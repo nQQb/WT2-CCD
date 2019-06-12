@@ -114,10 +114,10 @@ if (isset($_SESSION["username"])) {
                         function createImages(images) {
                             let html = "";
                             $.each(images, function (index, image) {
-
+console.log(image);
                                 html += "<div class='col-6'><img class='gallery-img' id='";
                                 html += index + 1;
-                                html += "' src='<?php echo $uploadThumbnailPath; ?>" + image["name"] + "' onclick=\"openLightbox('" + image["name"] + "')\"/>"
+                                html += "' src='<?php echo $uploadThumbnailPath; ?>" + image["name"] + "' onclick=\"openLightbox('" + image["name"] + "','" + image["lat"] + "','"+ image["long"] + "','"+ image["capturedate"] + "')\"/>"
                                 html += "<input type='hidden' value='" + images["name"] + "/><div style='width: 100%;'>";
 
                                 html += '<button onclick="duplicateImage(this, \'' + image["name"] + '\')">Duplizieren</button>';
@@ -178,9 +178,9 @@ if (isset($_SESSION["username"])) {
         <div class="modal-content">
             <span class="close">&times;</span>
             <img src="" id="lightboximage"/>
-            <div>
-
-            </div>
+            <ul id="lightboxmeta">
+                
+            </ul>
         </div>
     </div>
 </div>
@@ -438,9 +438,15 @@ if (isset($_SESSION["username"])) {
 
     var lightbox = document.getElementById("lightbox");
 
-    function openLightbox(image) {
+    function openLightbox(name, lat, long, capturedate) {
+        console.log(lat);
         lightbox.style.display = "block";
-        $("#lightboximage").attr("src", "<?php echo $localhostRoot; ?>/pictures/thumbs/" + image)
+        $("#lightboximage").attr("src", "<?php echo $localhostRoot; ?>/pictures/" + name);
+        let meta = "";
+        meta += "<li>Lat: " + lat + "</li>";
+        meta += "<li>Long: " + long + "</li>";
+        meta += "<li>Capture date: " + capturedate + "</li>";
+        $("#lightboxmeta").html(meta);
     }
 
     $("#lightbox .close").click(function () {

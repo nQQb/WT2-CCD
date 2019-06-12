@@ -54,3 +54,6 @@
 .flexcontainer img{
     width: 100%;
 }
+#lightboximage{
+    max-height: 100vh;
+}
