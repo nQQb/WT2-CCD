@@ -13,18 +13,13 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     
         $db = mysqli_connect("localhost", "root", "", "abschlussprojekt");
 
+    //Preparing and executing the sql statement
         $sql = "select pwd, isActive from user where username = ?";
         $entry = $db->prepare($sql);
         $entry->bind_param("s", $username);
         $entry->execute();
         $entry->bind_result($pwd, $isActive);
 
-        $sql = "select pwd from user where username = ?";
-    //Preparing and executing the sql statement
-        $entry = $db->prepare($sql);
-        $entry->bind_param("s", $username);
-        $entry->execute();
-        $entry->bind_result($pwd);
     //Fetching the result
         if ($entry->fetch()) {
             if ($isActive == 0) {
