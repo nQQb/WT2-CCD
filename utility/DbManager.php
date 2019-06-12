@@ -341,5 +341,57 @@ class DbManager{
             return false;
         }
     }
+    
+    public function insertImage($filename){
+        if($this->isConnected){
+            $db = mysqli_connect("localhost", "root", "", "abschlussprojekt");
+            $sql = "INSERT INTO `image` (`name`, `owner_id`) VALUES(?,?)";
+              $entry = $db->prepare($sql);
+              $entry->bind_param("si", $filename, $this->userId);
+              $entry->execute();
+              $entry->close();
+
+              $imageId = $this->getImageId($filename);
+              $sql = "INSERT INTO `user_image` (`user_id`, `image_id`) VALUES(?,?)";
+              $entry = $db->prepare($sql);
+              $entry->bind_param("ii", $this->userId, $imageId);
+              $entry->execute();
+              $entry->close();
+        }
+    }
+    
+    
+    public function getImageData(){
+        $images = [];
+        if($this->isConnected){
+            $sql = "SELECT `name`, `latitude`, `longitude` FROM `image` 
+                JOIN `user_image` ON `image`.`id` = `user_image`.`image_id`
+                JOIN `user` ON `user`.`id` = `user_image`.`user_id`
+                WHERE `user`.`id` = ?";
+            $entry = $this->db->prepare($sql);
+            $entry->bind_param("s", $this->userId);
+            $entry->execute();
+            $entry->bind_result($name, $lat, $long);
+            while($entry->fetch()){
+                array_push($images, ["name" => $name, "lat" => $lat, "long" => $long]);
+            }
+            $entry->close();
+        }
+        echo json_encode($images);
+    }
+    
+    
+    
+    public function updateCoordinates($image, $lat, $long){
+        if($this->isConnected){        
+            $sql = "UPDATE `image` SET `latitude` = ?, `longitude` = ? WHERE `name` = ?";
+            $entry = $this->db->prepare($sql);
+            $entry->bind_param("sss", $lat, $long, $image);
+            $success = $entry->execute();
+            $entry->close();
+            return $success;
+        }
+    }
+    
 }
 

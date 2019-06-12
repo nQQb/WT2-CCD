@@ -3,6 +3,7 @@
 $isLoggedIn = false;
 if (isset($_SESSION["username"])) {
     $isLoggedIn = true;
+    $username = $_SESSION["username"];
 }
 if ($isLoggedIn && isset($_FILES['file'])) {
     $uploadPath = "pictures/";
@@ -53,23 +54,9 @@ if ($isLoggedIn && isset($_FILES['file'])) {
         imagedestroy($thumb);
         
         include("utility/DbManager.php");
-        $DbManager = new DbManager($username);
-        
+        $dbManager = new DbManager($username);
         $filename = ($fc . '.' . $extension);
-        $userId = $DbManager->getUserId($username);
-        $db = mysqli_connect("localhost", "root", "", "abschlussprojekt");
-        $sql = "INSERT INTO `image` (`name`, `owner_id`) VALUES(?,?)";
-          $entry = $db->prepare($sql);
-          $entry->bind_param("si", $filename, $userId);
-          $entry->execute();
-          $entry->close();
-          
-          $imageId = $DbManager->getImageId($filename);
-          $sql = "INSERT INTO `user_image` (`user_id`, `image_id`) VALUES(?,?)";
-          $entry = $db->prepare($sql);
-          $entry->bind_param("ii", $userId, $imageId);
-          $entry->execute();
-          $entry->close();
+        $dbManager->insertImage($filename);
     }
 
     if (!$success) {

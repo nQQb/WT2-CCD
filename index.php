@@ -11,8 +11,10 @@ and open the template in the editor.
     <title>Webshop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="res/css/bootstrap.min.css">
-    <link rel="stylesheet" href="croppie.css"/>
+    <link rel="stylesheet" href="res/css/croppie.css"/>
     <link rel="stylesheet" href="res/css/style.css"/>
+<script src="res/js/jquery-3.4.1.min.js"></script>
+<script src="res/js/croppie.js"></script>
 
     <script>
         var baseURL = '/BIF_SS19/Abschlussprojekt/';
@@ -159,7 +161,4 @@ and open the template in the editor.
     <a href="index.php?site=imprint">Impressum</a>
 </footer>
 </body>
-<script src="croppie.js"></script>
-<script src="jquery-3.4.1.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </html>

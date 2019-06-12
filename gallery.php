@@ -1,11 +1,11 @@
 <?php
 $isLoggedIn = false;
+$localhostRoot = "http://localhost/BIF_SS19/Abschlussprojekt";
 if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
     $isLoggedIn = true;
     $dbManager = new DbManager($username);
 }
-$isLoggedIn = true;
 ?>
 <h1>Galerie</h1>
 <link rel="stylesheet" type="text/css" href="basic.min.css"/>
@@ -45,7 +45,7 @@ $isLoggedIn = true;
             icon: L.icon({
                iconSize: [ 25, 41 ],
                iconAnchor: [ 13, 41 ],
-               iconUrl: 'images/' + img,
+               iconUrl: 'pictures/thumbs/' + img,
                shadowUrl: 'leaflet-images/marker-shadow.png'
             }),
             draggable: true
@@ -93,58 +93,49 @@ $isLoggedIn = true;
     }
 
 </script>
+
+<?php 
+
+    $uploadPath = $localhostRoot."/pictures/";
+    $uploadThumbnailPath = $uploadPath."thumbs/";
+?>
             
-            <div class="flexcontainer">
-                <?php
-                
-              
+            <div class="flexcontainer container-fluid">
+                <div class="row">
+                <script>
+                    let html = "";
+                    $.post("managegallery.php", {
+                        username: "<?php echo $username;?>"
+                    }, function(data, status){
+                        let images = JSON.parse(data);
+                        html = createImages(images);
+                        $(".flexcontainer .row").html(html);
+                    });
                     
+                    function createImages(images){
+                        let html = "";
+                    $.each(images, function(index, image){
+                            
+                            html += "<div class='col-6'><img class='gallery-img' id='";
+                            html += index+1;
+                            html += "' src='<?php echo $uploadThumbnailPath;?>" + image["name"] + "' onclick=\"openLightbox('" + image["name"] + "')\"/>"
+                            html += "<input type='hidden' value='" + images["name"] + "/><div style='width: 100%;'>";
 
-                    $uploadPath = "C:/xampp/htdocs/BIF_SS19/Vorprojekt/images/";
-                    $uploadThumbnailPath = $uploadPath."thumbs/";
-                    $cnt = 1;
-                    if (file_exists($uploadPath) && file_exists($uploadThumbnailPath) && $handle = opendir($uploadThumbnailPath)) {
-                        while (($entry = readdir($handle)) !== false) {
-                            if (!is_dir($uploadThumbnailPath.$entry)) {
-
-                                ?>
-                                <div>
-                                <img class="gallery-img" id="img-<?php echo $cnt;?>" src="http://localhost/BIF_SS19/Vorprojekt/images/thumbs/<?php echo $entry; ?>"/>
-                                <input type="hidden" value="<?php echo $entry; ?>"/>
-                                <div>
-                                <?php
-                                if ($isLoggedIn && array_key_exists($username, $users)) {
-                                    $user = $users[$username];
-                                    if (array_key_exists("role", $user) && $user["role"] == "admin") {
-                                        ?>
-                                        <button onclick="duplicateImage(this, '<?php echo $entry; ?>')">Duplizieren</button>
-                                        <button onclick="openModal('<?php echo $entry;?>')">Taggen</button>
-                                        
-                                        <button onclick="crop('<?php echo $entry;?>')">Crop</button>
-                                        <button onclick="openShareModal('<?php echo $entry;?>')">Share</button>
-                                        <?php
-
-                                    }
-                                }
-                                ?>
-                                </div>
-                                        </div>
-                    <?php
-                                $coordinates = json_decode($dbManager->getCoordinates($entry));
-                                if($coordinates != []){
-                                    $lat = $coordinates->lat;
-                                    $long = $coordinates->long;
-                                    ?>
-                                        <script>addMarker(<?php echo $lat;?>,<?php echo $long;?>, '<?php echo $entry;?>');</script>
-                                    <?php
-                                }
-                            }
+                            html += '<button onclick="duplicateImage(this, \'' + image["name"] + '\')">Duplizieren</button>';
+                            html += '<button onclick="openModal(\'' + image["name"] + '\')">Taggen</button>';
+                            html += '<button onclick="crop(\'' + image["name"] + '\')">Crop</button>';
+                            html += '<button onclick="openShareModal(\'' + image["name"] + '\')">Share</button>';
+                            html += '<button onclick="selectForDownload(' + (index+1) + ',\'' + image["name"] + '\')">Select for Download</button>';
+                                   
+                            html += "</div></div>";
+                            if(image["lat"] != null && image["long"] != null){
+                            addMarker(image["lat"], image["long"], image["name"]);
                         }
-                        closedir($handle);
+                    });
+                        return html;
                     }
-                ?>
-
-
+                </script>
+                </div>
             </div>
         </div>
     </div>
@@ -179,6 +170,16 @@ $isLoggedIn = true;
         <input type="text" id="shareInput"/>
         <button type="button" id="shareButton" onclick="shareImage()">Share</button>
         <div id="shareContainer"></div>
+    </div>
+  </div>
+    </div>
+    
+    <div id="lightbox" class="modal">
+        <div class="modal-content">
+        <span class="close">&times;</span>
+        <img src="" id="lightboximage"/>
+    <div>
+       
     </div>
   </div>
     </div>
@@ -257,7 +258,7 @@ $isLoggedIn = true;
         }, function (data, status) {
             if(data != "NULL"){
                 //evtl ein javascript add
-                location.reload();
+                //location.reload();
             }
         });
     }
@@ -266,15 +267,13 @@ $isLoggedIn = true;
         $(this).toggleClass("selected");
     });
     
+    var imgnamesDownload = [];
     $("#download").click(function(){
-        var imgnames = [];
-        $.each($("img.selected").siblings("input"), function(index, input){
-            imgnames[index] = $(input).val();
-        });
         
         $.post("download.php", {
-            imgnames: imgnames
+            imgnames: imgnamesDownload
         }, function(data, status){
+            console.log(data);
             location.href=data;
         });
     });
@@ -284,12 +283,16 @@ $isLoggedIn = true;
         $.get("imageTags.php", {
             tag: tag
         }, function(data, status){
-            $(".flexcontainer").html(data);
+            let html = createImages(JSON.parse(data));
+            $(".flexcontainer .row").html(html);
         });
     });
     
     // Get the modal
 var modal = document.getElementById("myModal");
+
+var shareModal = document.getElementById("shareModal");
+shareModal.style.display = "none";
 
 // Get the button that opens the modal
 var btn = document.getElementById("cropButton");
@@ -354,11 +357,12 @@ var resize = new Croppie(el, {
     enableOrientation: true,
     mouseWheelZoom: 'ctrl'
 });
+var imageToCrop;
 function crop(image){
-   
+   imageToCrop = image;
 cropModal.style.display = "block";
 resize.bind({
-    url: 'images/' + image,
+    url: 'pictures/' + image,
 });
 }
 
@@ -370,7 +374,7 @@ $("#cropButton").click(function(){
                     size: 'viewport'}).then(function(data) {
         // do something with cropped blob
         console.log(data);
-        $.post("crop.php", {image: data});
+        $.post("crop.php", {image: data, imagename: imageToCrop});
     });
 });
 
@@ -378,8 +382,6 @@ $("#cropModal .close").click(function(){
     cropModal.style.display = "none";
 });
 
-var shareModal = document.getElementById("shareModal");
-shareModal.style.display = "none";
 
 var imageToShare;
 
@@ -433,7 +435,27 @@ function removeShare(sender, image, username){
         });
     }
     
+var lightbox = document.getElementById("lightbox");
     
+function openLightbox(image){
+    lightbox.style.display = "block";
+    $("#lightboximage").attr("src", "<?php echo $localhostRoot;?>/pictures/thumbs/" + image)
+}
+
+$("#lightbox .close").click(function(){
+    lightbox.style.display = "none";
+});
     
+function selectForDownload(idx, image){
+    if(imgnamesDownload.includes(image)){
+        imgnamesDownload.splice(imgnamesDownload.indexOf(image),1);
+        $("#" + idx).css("border", "none");
+    }
+    else{
+        imgnamesDownload.push(image);
+        console.log($("#" + idx));
+        $("#" + idx).css("border", "3px solid blue");
+    }
+}
 </script>
 <script src="dropzone.min.js"></script>
