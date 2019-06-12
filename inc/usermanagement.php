@@ -1,3 +1,4 @@
+<!-- Wenn man als Admin eingeloggt ist hat man das Usermanagement in der Navbar sichtbar und kann User verwalten-->
 <?php
 $root = dirname(__DIR__);
 $localhostRoot = "http://localhost/BIF_SS19/Abschlussprojekt";
@@ -12,10 +13,10 @@ if (isset($_SESSION["username"])) {
 }
 if($isLoggedIn && $isAdmin){
     $others = json_decode($dbManager->getOtherUsers());
-    ?>        
+    ?>
 <script src="<?php echo $localhostRoot;?>/res/js/usermanagement.js"></script>
 <table class="table">
-    
+
   <thead>
     <tr>
       <th scope="col">Username</th>
@@ -39,7 +40,7 @@ if($isLoggedIn && $isAdmin){
           <button type="button" class="btn btn-secondary" onclick="resetPassword(<?php echo $user->id;?>);">Passwort-Reset</button>
       </td>
     </tr>
-    
+
     <?php
     }
     ?>
