@@ -12,12 +12,12 @@ if (!isset($_SESSION["username"]) && isset($_POST["username"]) && isset($_POST["
     if ($password == $password2) {
 
         $hash = password_hash($password, PASSWORD_DEFAULT);
-
+    //validating mail
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
             $db = @new mysqli("localhost", "root", "", "abschlussprojekt");
             if (mysqli_connect_errno() == 0) {
-
+    //preparing sql statement
                 $sql = "INSERT INTO `user` (`username`, `firstname`, `lastname`, `email`, `pwd`) VALUES (?,?,?,?,?)";
                 $entry = $db->prepare($sql);
                 $entry->bind_param('sssss', $username, $firstname, $lastname, $email, $hash);
