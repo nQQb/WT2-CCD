@@ -1,3 +1,4 @@
+<!-- Das Impressum ---->
 <div id="imprintpage" class="text-center">
     <p>Max Muster</p>
     <p>4711 Musterdorf</p>
@@ -15,4 +16,3 @@
     <p>Verbraucher haben die Möglichkeit, Beschwerden an die Online-Streitbeilegungsplattform der EU zu richten: <a href="http://ec.europa.eu/odr">http://ec.europa.eu/odr</a></p>
     <p>Sie können allfällige Beschwerden auch an die oben angegebene E-Mail-Adresse richten.</p>
 </div>
-

@@ -1,3 +1,4 @@
+<!-- Hier wird das Registrier Formular mit den Submit button erzeugt--->
 <div class="container">
     <h1>Registration</h1>
     <form method="post" action="./ajax/register.php">
