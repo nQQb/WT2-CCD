@@ -12,7 +12,7 @@ if (isset($_SESSION["username"])) {
     $isAdmin = $dbManager->isAdmin;
 }
 ?>
-
+<!-- Dies Navbar wird mittels Bootstrap erstellt --->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@ if (isset($_SESSION["username"])) {
 
 
 <?php
-
+// Wenn eingeloggt, ändert sich die navbar bzw. bekommt Sie neue Features-->
 if ($isLoggedIn) {
     ?>
             <li class="nav-item">
