@@ -1,6 +1,4 @@
-<!----------------------------------------
------------DESIGN OBERFLÄCHE--------------
------------------------------------------>
+<!---DESIGN OBERFLÄCHE---------------------->
 <div class="container">
     <h1>Login</h1>
     <form method="post" action="./ajax/process.php">

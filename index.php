@@ -8,7 +8,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Webshop</title>
+        <title>Gallery</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="res/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/croppie.css"/>
@@ -39,11 +39,11 @@ and open the template in the editor.
 
         if (isset($_SESSION["username"])) {
             $loginSuccess = true;
-        } 
+        }
         ?>
     </head>
     <body>
-
+   <!-- hier werden alle PHP files in den index Includiert -->
         <header><?php include("inc/navigation.php"); ?></header>
         <main>
         <?php

@@ -12,7 +12,7 @@ if (isset($_SESSION["username"])) {
     $isAdmin = $dbManager->isAdmin;
 }
 ?>
-
+<!-- Dies Navbar wird mittels Bootstrap erstellt --->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,8 @@ if (isset($_SESSION["username"])) {
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <?php
-
+ // Hier wird mittels php überprüft ob man als Admin oder normaler User eingeloggt ist
+ // Admin hat höhere rechter and der normale User und kann deshalb User verwalten.
             if($isLoggedIn && $isAdmin) {
                 $links = $xml->admin->link;
                 }
@@ -46,7 +47,7 @@ if (isset($_SESSION["username"])) {
 
 
 <?php
-
+// Wenn eingeloggt, zeigt es an das man eingeloggt ist-->
 if ($isLoggedIn) {
     ?>
             <li class="nav-item">

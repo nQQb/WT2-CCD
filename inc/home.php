@@ -1,3 +1,4 @@
+<!--Hier wird die Homepage erstellt mit einen Container----->
 <div id="homepage">
 <h1>Willkommen</h1>
 <p>Dies ist das Abschlussprojekt BIF2A von:</p>
